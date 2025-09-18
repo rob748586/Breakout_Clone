@@ -50,6 +50,7 @@ class InGameScreen(GameStateBase):
     def handle_event(self, event):
         """ Call Paddle's handle event method to parse input. """
         self.paddle.handle_event(event)
+        self.ball.handle_event(event)
 
     def test_if_all_bricks_destroyed(self):
         """ Check if all bricks were destroyed, displaying the win screen if true. """
