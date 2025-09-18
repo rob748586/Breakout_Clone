@@ -1,3 +1,5 @@
+import pygame
+
 class Settings:
     """ Centralised settings class with member variables related to rendering, movement and display. """
     def __init__(self):
@@ -32,3 +34,5 @@ class Settings:
         self.paddle_height = 24
         self.paddle_move_speed = 600
         self.paddle_bounce_upper_bound = 50
+
+        self.START_BALL_EVENT = pygame.USEREVENT + 1
