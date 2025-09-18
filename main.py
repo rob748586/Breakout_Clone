@@ -1,3 +1,9 @@
+import asyncio
+
 from game import Game
 
-Game().run()
+async def main():
+    await Game().run()
+
+
+asyncio.run(main())

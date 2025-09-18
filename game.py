@@ -18,7 +18,7 @@ class Game:
 
         self.show_title()
 
-    def run(self):
+    async def run(self):
         """ Main game loop. """
         running = True
         while running:
