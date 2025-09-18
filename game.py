@@ -1,3 +1,4 @@
+import asyncio
 import pygame
 from game_state_manager import GameStateManager
 from in_game_screen import InGameScreen
@@ -39,6 +40,7 @@ class Game:
 
                 pygame.display.flip()
                 self.clock.tick(60)
+                await asyncio.sleep(0)
 
         pygame.quit()
 
