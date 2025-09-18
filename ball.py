@@ -15,6 +15,7 @@ class Ball(DynamicRenderable):
         self.size = self.settings.ball_size
         self.rect = pygame.Rect(0, 0, self.size, self.size)
         self.position = position
+                
 
         self.reset_ball()
 
@@ -27,6 +28,10 @@ class Ball(DynamicRenderable):
         self.position = Vector2(rect.width / 2, rect.height - 100)
         self.rect.centerx, self.rect.centery = self.position.x, self.position.y
         self.direction = direction.normalize()
+        self.moving = False
+
+        # set a timer to start the ball moving after a second
+        pygame.time.set_timer(self.settings.START_BALL_EVENT, 1000, 1)
 
     def render(self):
         """ Render the Ball. """
@@ -73,16 +78,19 @@ class Ball(DynamicRenderable):
         self.direction = self.direction.normalize()
 
     def do_updates(self, time_delta):
-        """ Update the position of the ball and test for collisions with the screen boundary, bouncing if required. """
-        destination = self.position + self.direction * self.settings.ball_speed * time_delta
+        """ If the ball is moving, update the position of the ball and test for collisions with the screen boundary, bouncing if required. """
 
-        if destination.x > 0 and destination.x < self.screen.get_rect().width and \
-           destination.y > self.settings.border_top:
-            self.position += self.direction * self.settings.ball_speed * time_delta
-        else:
-            self.edge_bounce_at(destination)
+        if self.moving:
+            destination = self.position + self.direction * self.settings.ball_speed * time_delta
 
-        self.rect.centerx, self.rect.centery = self.position.x, self.position.y
+            if destination.x > 0 and destination.x < self.screen.get_rect().width and \
+            destination.y > self.settings.border_top:
+                self.position += self.direction * self.settings.ball_speed * time_delta
+            else:
+                self.edge_bounce_at(destination)
+
+            self.rect.centerx, self.rect.centery = self.position.x, self.position.y
 
     def handle_event(self, event):
-        pass
+        if event.type == self.settings.START_BALL_EVENT:
+            self.moving = True
